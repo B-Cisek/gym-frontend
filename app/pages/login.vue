@@ -12,6 +12,7 @@ useSeoMeta({
 });
 
 const toast = useToast();
+const auth = useAuth();
 
 const fields = [
   {
@@ -58,8 +59,9 @@ const schema = z.object({
 
 type Schema = z.output<typeof schema>;
 
-function onSubmit(payload: FormSubmitEvent<Schema>) {
-  console.log("Submitted", payload);
+async function onSubmit(payload: FormSubmitEvent<Schema>) {
+  await auth.signIn(payload.data);
+  await navigateTo("/dashboard");
 }
 </script>
 

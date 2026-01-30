@@ -7,4 +7,9 @@ export default defineNuxtConfig({
   },
   modules: ["@nuxt/eslint", "@nuxt/icon", "@nuxt/ui", "@nuxt/content"],
   css: ["~/assets/css/main.css"],
+  runtimeConfig: {
+    public: {
+      apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL || "http://localhost",
+    },
+  },
 });
