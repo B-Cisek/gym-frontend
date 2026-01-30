@@ -1,66 +1,74 @@
 <script setup lang="ts">
 import * as z from "zod";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { AuthError } from "~/types";
 
 definePageMeta({
   layout: "auth",
 });
 
 useSeoMeta({
-  title: "Sign up",
-  description: "Create an account to get started",
+  title: "Zarejestruj się",
+  description: "Utwórz nowe konto",
 });
 
-const toast = useToast();
+const toast = useAppToast();
+const auth = useAuth();
 
 const fields = [
-  {
-    name: "name",
-    type: "text" as const,
-    label: "Name",
-    placeholder: "Enter your name",
-  },
   {
     name: "email",
     type: "text" as const,
     label: "Email",
-    placeholder: "Enter your email",
+    placeholder: "Wpisz swój email",
   },
   {
     name: "password",
-    label: "Password",
+    label: "Hasło",
     type: "password" as const,
-    placeholder: "Enter your password",
+    placeholder: "Wpisz swoje hasło",
+  },
+  {
+    name: "confirmPassword",
+    label: "Potwierdź hasło",
+    type: "password" as const,
+    placeholder: "Potwierdź swoje hasło",
   },
 ];
 
-const providers = [
-  {
-    label: "Google",
-    icon: "i-simple-icons-google",
-    onClick: () => {
-      toast.add({ title: "Google", description: "Login with Google" });
-    },
-  },
-  {
-    label: "GitHub",
-    icon: "i-simple-icons-github",
-    onClick: () => {
-      toast.add({ title: "GitHub", description: "Login with GitHub" });
-    },
-  },
-];
-
-const schema = z.object({
-  name: z.string().min(1, "Name is required"),
-  email: z.email("Invalid email"),
-  password: z.string().min(8, "Must be at least 8 characters"),
-});
+const schema = z
+  .object({
+    email: z.email("Nieprawidłowy adres email"),
+    password: z
+      .string({ error: "Hasło musi mieć co najmniej 8 znaków" })
+      .min(8, "Hasło musi mieć co najmniej 8 znaków"),
+    confirmPassword: z.string({ error: "Potwierdź swoje hasło" }),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Hasła nie są takie same",
+    path: ["confirmPassword"],
+  });
 
 type Schema = z.output<typeof schema>;
 
-function onSubmit(payload: FormSubmitEvent<Schema>) {
-  console.log("Submitted", payload);
+async function onSubmit(payload: FormSubmitEvent<Schema>) {
+  try {
+    await auth.signUpOwner({
+      email: payload.data.email,
+      password: payload.data.password,
+    });
+
+    toast.success("Konto zostało utworzone pomyślnie");
+    await navigateTo("/dashboard");
+  } catch (error) {
+    let message = "Wystąpił błąd podczas tworzenia konta";
+
+    if (error instanceof AuthError) {
+      message = error.message;
+    }
+
+    toast.error(message);
+  }
 }
 </script>
 
@@ -68,18 +76,22 @@ function onSubmit(payload: FormSubmitEvent<Schema>) {
   <UAuthForm
     :fields="fields"
     :schema="schema"
-    :providers="providers"
-    title="Create an account"
-    :submit="{ label: 'Create account' }"
+    title="Zarejestruj się"
+    :submit="{
+      label: 'Zarejestruj się',
+      class: 'cursor-pointer',
+      loading: auth.loading.value,
+    }"
     @submit="onSubmit"
   >
     <template #description>
-      Already have an account?
-      <ULink to="/login" class="text-primary font-medium">Login</ULink>.
+      Masz już konto?
+      <ULink to="/login" class="text-primary font-medium">Zaloguj się</ULink>.
     </template>
 
     <template #footer>
-      By signing up, you agree to our
+      Rejestrując się, akceptujesz nasze warunki korzystania z serwisu
+      <br />
       <ULink to="/" class="text-primary font-medium">Terms of Service</ULink>.
     </template>
   </UAuthForm>

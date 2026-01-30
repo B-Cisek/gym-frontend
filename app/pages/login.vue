@@ -1,67 +1,60 @@
 <script setup lang="ts">
 import * as z from "zod";
 import type { FormSubmitEvent } from "@nuxt/ui";
+import { AuthError } from "~/types";
 
 definePageMeta({
   layout: "auth",
 });
 
 useSeoMeta({
-  title: "Login",
-  description: "Login to your account to continue",
+  title: "Logowanie",
+  description: "Zaloguj się do swojego konta.",
 });
 
-const toast = useToast();
+const toast = useAppToast();
 const auth = useAuth();
+
+const errorMessage = ref<string>("");
 
 const fields = [
   {
     name: "email",
     type: "text" as const,
     label: "Email",
-    placeholder: "Enter your email",
+    placeholder: "Podaj swój email",
     required: true,
   },
   {
     name: "password",
-    label: "Password",
+    label: "Hasło",
     type: "password" as const,
-    placeholder: "Enter your password",
-  },
-  {
-    name: "remember",
-    label: "Remember me",
-    type: "checkbox" as const,
-  },
-];
-
-const providers = [
-  {
-    label: "Google",
-    icon: "i-simple-icons-google",
-    onClick: () => {
-      toast.add({ title: "Google", description: "Login with Google" });
-    },
-  },
-  {
-    label: "GitHub",
-    icon: "i-simple-icons-github",
-    onClick: () => {
-      toast.add({ title: "GitHub", description: "Login with GitHub" });
-    },
+    placeholder: "Podaj swoje hasło",
+    required: true,
   },
 ];
 
 const schema = z.object({
-  email: z.email("Invalid email"),
-  password: z.string().min(8, "Must be at least 8 characters"),
+  email: z.email("Nieprawidłowy adres email"),
+  password: z.string({ error: "Hasło jest wymagane" }),
 });
 
 type Schema = z.output<typeof schema>;
 
 async function onSubmit(payload: FormSubmitEvent<Schema>) {
-  await auth.signIn(payload.data);
-  await navigateTo("/dashboard");
+  try {
+    await auth.signIn(payload.data);
+    toast.success("Zalogowano pomyślnie");
+    await navigateTo("/dashboard");
+  } catch (error) {
+    errorMessage.value = "Nie udało się zalogować. Spróbuj ponownie.";
+
+    if (error instanceof AuthError) {
+      errorMessage.value = error.message;
+    }
+
+    toast.error(errorMessage.value);
+  }
 }
 </script>
 
@@ -69,24 +62,39 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
   <UAuthForm
     :fields="fields"
     :schema="schema"
-    :providers="providers"
-    title="Welcome back"
+    title="Zaloguj się do swojego konta"
     icon="i-lucide-lock"
+    :submit="{
+      label: 'Zaloguj się',
+      class: 'cursor-pointer',
+      loading: auth.loading.value,
+    }"
     @submit="onSubmit"
   >
+    <template #validation>
+      <UAlert
+        v-show="errorMessage !== ''"
+        color="error"
+        icon="i-lucide-info"
+        :title="errorMessage"
+      />
+    </template>
     <template #description>
-      Don't have an account?
-      <ULink to="/signup" class="text-primary font-medium">Sign up</ULink>.
+      Nie masz konta?
+      <ULink to="/signup" class="text-primary font-medium"
+        >Zarejestruj się</ULink
+      >.
     </template>
 
     <template #password-hint>
       <ULink to="/" class="text-primary font-medium" tabindex="-1"
-        >Forgot password?</ULink
+        >Zapomniałeś hasła?</ULink
       >
     </template>
 
     <template #footer>
-      By signing in, you agree to our
+      Logując się, akceptujesz nasze warunki korzystania z serwisu
+      <br />
       <ULink to="/" class="text-primary font-medium">Terms of Service</ULink>.
     </template>
   </UAuthForm>
