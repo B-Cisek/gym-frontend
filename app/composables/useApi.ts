@@ -1,6 +1,5 @@
 import type { UseFetchOptions } from "nuxt/app";
 
-// For component setup (SSR-friendly, reactive)
 export function useApi<T>(
   url: string | (() => string),
   options?: UseFetchOptions<T>,
@@ -11,12 +10,10 @@ export function useApi<T>(
   });
 }
 
-// For after mount (event handlers, onMounted, etc.)
 export function useApiCall() {
   return useNuxtApp().$api as typeof $fetch;
 }
 
-// Convenience wrapper for common use case
 export async function apiCall<T>(
   url: string,
   options?: Parameters<typeof $fetch>[1],

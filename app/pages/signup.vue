@@ -5,6 +5,7 @@ import { AuthError } from "~/types";
 
 definePageMeta({
   layout: "auth",
+  middleware: ["guest"],
 });
 
 useSeoMeta({

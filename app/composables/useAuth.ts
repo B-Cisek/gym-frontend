@@ -1,28 +1,5 @@
-import type {
-  AuthResponse,
-  CookieName,
-  LoginCredentials,
-  SignupCredentials,
-  User,
-  ApiError,
-} from "~/types";
-
-import {
-  TOKEN_COOKIE,
-  REFRESH_TOKEN_COOKIE,
-  AuthError,
-  AuthErrorCode,
-} from "~/types";
-
-const setCookie = (name: CookieName, value: string) => {
-  const cookie = useCookie(name);
-  cookie.value = value;
-};
-
-const clearCookie = (name: CookieName) => {
-  const cookie = useCookie(name);
-  cookie.value = null;
-};
+import type { User, ApiError } from "~/types";
+import { AuthError, AuthErrorCode } from "~/types";
 
 export const useAuth = () => {
   const user = useState<User | null>("user", () => null);
@@ -32,14 +9,21 @@ export const useAuth = () => {
   async function signIn(credentials: LoginCredentials): Promise<void> {
     loading.value = true;
 
+    const config = useRuntimeConfig();
+
     try {
-      const data = await apiCall<AuthResponse>("/auth/login", {
+      const response = await $fetch<AuthResponse>("/auth/login", {
+        baseURL: config.public.apiBaseUrl,
         method: "POST",
         body: credentials,
       });
-      const { token, refresh_token } = data;
-      setCookie(TOKEN_COOKIE, token);
-      setCookie(REFRESH_TOKEN_COOKIE, refresh_token);
+
+      await $fetch("/api/setup-session", {
+        method: "POST",
+        body: response,
+      });
+
+      await fetchUser();
     } catch (error) {
       const apiError = error as ApiError;
 
@@ -64,15 +48,21 @@ export const useAuth = () => {
   async function signUpOwner(credentials: SignupCredentials): Promise<void> {
     loading.value = true;
 
+    const config = useRuntimeConfig();
+
     try {
-      const data = await apiCall<AuthResponse>("/auth/owner/register", {
+      const response = await $fetch<AuthResponse>("/auth/owner/register", {
+        baseURL: config.public.apiBaseUrl,
         method: "POST",
         body: credentials,
       });
 
-      const { token, refresh_token } = data;
-      setCookie(TOKEN_COOKIE, token);
-      setCookie(REFRESH_TOKEN_COOKIE, refresh_token);
+      await $fetch("/api/setup-session", {
+        method: "POST",
+        body: response,
+      });
+
+      await fetchUser();
     } catch (error) {
       const apiError = error as ApiError;
 
@@ -103,11 +93,25 @@ export const useAuth = () => {
   }
 
   function logout(): void {
-    loading.value = true;
+    clearAuthState();
+  }
+
+  function clearAuthState(): void {
     user.value = null;
-    clearCookie(TOKEN_COOKIE);
-    clearCookie(REFRESH_TOKEN_COOKIE);
-    loading.value = false;
+
+    $fetch("/api/logout", {
+      method: "POST",
+    }).catch(() => {});
+  }
+
+  async function fetchUser(): Promise<void> {
+    try {
+      const data = await apiCall<User>("/auth/me");
+
+      user.value = data;
+    } catch {
+      user.value = null;
+    }
   }
 
   return {
@@ -116,6 +120,8 @@ export const useAuth = () => {
     signIn,
     logout,
     signUpOwner,
+    fetchUser,
     loading,
+    clearAuthState,
   };
 };

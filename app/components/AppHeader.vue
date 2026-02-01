@@ -1,17 +1,14 @@
 <script setup lang="ts">
-const route = useRoute();
-
-const items = computed(() => [
+const items = [
   {
     label: "Pricing",
     to: "/pricing",
   },
-
   {
     label: "Changelog",
     to: "/changelog",
   },
-]);
+];
 </script>
 
 <template>
@@ -20,13 +17,14 @@ const items = computed(() => [
       <NuxtLink to="/">
         <AppLogo class="w-auto h-6 shrink-0" />
       </NuxtLink>
-      <TemplateMenu />
     </template>
 
     <UNavigationMenu :items="items" variant="link" />
 
     <template #right>
-      <UColorModeButton />
+      <ClientOnly>
+        <UColorModeButton />
+      </ClientOnly>
 
       <UButton
         icon="i-lucide-log-in"
