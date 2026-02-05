@@ -46,7 +46,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
   try {
     await auth.signIn(payload.data);
     toast.success("Zalogowano pomyślnie");
-    await navigateTo("/dashboard");
+    await navigateTo("/owner/dashboard");
   } catch (error) {
     errorMessage.value = "Nie udało się zalogować. Spróbuj ponownie.";
 

@@ -60,7 +60,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     });
 
     toast.success("Konto zostało utworzone pomyślnie");
-    await navigateTo("/dashboard");
+    await navigateTo("/owner/dashboard");
   } catch (error) {
     let message = "Wystąpił błąd podczas tworzenia konta";
 
