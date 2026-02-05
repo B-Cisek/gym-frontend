@@ -1,6 +1,31 @@
+import type { $Fetch } from "ofetch";
+
+declare module "h3" {
+  interface H3EventContext {
+    user?: User;
+  }
+}
+
+declare module "#app" {
+  interface NuxtApp {
+    $api: $Fetch;
+  }
+}
+
 export enum AppEnv {
   PRODUCTION = "production",
   DEVELOPMENT = "development",
+}
+
+export enum UserRole {
+  USER = "ROLE_USER",
+  OWNER = "ROLE_OWNER",
+}
+
+export interface User {
+  id: string;
+  email: string;
+  roles: UserRole[];
 }
 
 export interface LoginCredentials {

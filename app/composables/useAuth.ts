@@ -1,4 +1,4 @@
-import type { User, ApiError } from "~/types";
+import type { ApiError } from "~/types";
 import { AuthError, AuthErrorCode } from "~/types";
 
 export const useAuth = () => {
@@ -105,8 +105,10 @@ export const useAuth = () => {
   }
 
   async function fetchUser(): Promise<void> {
+    const { get } = useApi();
+
     try {
-      const data = await apiCall<User>("/auth/me");
+      const data = await get<User>("/auth/me");
 
       user.value = data;
     } catch {

@@ -1,23 +1,29 @@
-import type { UseFetchOptions } from "nuxt/app";
+import type { $Fetch } from "ofetch";
 
-export function useApi<T>(
-  url: string | (() => string),
-  options?: UseFetchOptions<T>,
-) {
-  return useFetch(url, {
-    ...options,
-    $fetch: useNuxtApp().$api as typeof $fetch,
-  });
+type ApiOptions = Omit<Parameters<$Fetch>[1], "method" | "body">;
+type ApiBody = Record<string, unknown> | FormData;
+
+export function useApiInstance(): $Fetch {
+  return useNuxtApp().$api;
 }
 
-export function useApiCall() {
-  return useNuxtApp().$api as typeof $fetch;
-}
+export function useApi() {
+  const $api = useApiInstance();
 
-export async function apiCall<T>(
-  url: string,
-  options?: Parameters<typeof $fetch>[1],
-): Promise<T> {
-  const $api = useNuxtApp().$api as typeof $fetch;
-  return $api<T>(url, options);
+  return {
+    get: <T>(url: string, options?: ApiOptions) =>
+      $api<T>(url, { ...options, method: "GET" }),
+
+    post: <T>(url: string, body?: ApiBody, options?: ApiOptions) =>
+      $api<T>(url, { ...options, method: "POST", body }),
+
+    put: <T>(url: string, body?: ApiBody, options?: ApiOptions) =>
+      $api<T>(url, { ...options, method: "PUT", body }),
+
+    patch: <T>(url: string, body?: ApiBody, options?: ApiOptions) =>
+      $api<T>(url, { ...options, method: "PATCH", body }),
+
+    delete: <T>(url: string, options?: ApiOptions) =>
+      $api<T>(url, { ...options, method: "DELETE" }),
+  };
 }

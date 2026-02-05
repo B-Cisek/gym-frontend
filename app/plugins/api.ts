@@ -1,6 +1,6 @@
 export default defineNuxtPlugin((nuxtApp) => {
-  const config = useRuntimeConfig();
-  const { clearAuthState, fetchUser } = useAuth();
+  const { apiBaseUrl } = useRuntimeConfig().public;
+  const { fetchUser, clearAuthState } = useAuth();
   let isRefreshing = false;
   let refreshSubscribers: Array<{
     resolve: (token: string) => void;
@@ -8,7 +8,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   }> = [];
 
   const api = $fetch.create({
-    baseURL: config.public.apiBaseUrl,
+    baseURL: apiBaseUrl,
     onRequest: ({ options }) => {
       const cookie = useCookie(TOKEN_COOKIE);
 
@@ -40,9 +40,7 @@ export default defineNuxtPlugin((nuxtApp) => {
 
               clearAuthState();
 
-              if (nuxtApp.ssrContext?.url !== "/login") {
-                nuxtApp.runWithContext(() => navigateTo("/login"));
-              }
+              nuxtApp.runWithContext(() => navigateTo("/login"));
 
               refreshSubscribers.forEach((subscriber) =>
                 subscriber.reject(new Error("Token refresh failed")),
@@ -56,11 +54,12 @@ export default defineNuxtPlugin((nuxtApp) => {
             resolve: async (token: string) => {
               options.headers.set("Authorization", `Bearer ${token}`);
               try {
-                const result = await $fetch(request, {
+                const retryOptions = {
                   ...options,
-                  baseURL: config.public.apiBaseUrl,
-                } as any);
-                resolve(result as any);
+                  baseURL: apiBaseUrl,
+                };
+                const result = await $fetch(request, retryOptions);
+                resolve(result);
               } catch (retryError) {
                 reject(retryError);
               }

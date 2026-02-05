@@ -1,10 +1,10 @@
 export default defineEventHandler(async (event) => {
-  const config = useRuntimeConfig();
-  const refreshToken = getCookie(event, TOKEN_COOKIE);
+  const { apiBaseUrl } = useRuntimeConfig().public;
+  const refreshToken = getCookie(event, REFRESH_TOKEN_COOKIE);
 
   if (refreshToken) {
     await $fetch("/auth/logout", {
-      baseURL: config.public.apiBaseUrl,
+      baseURL: apiBaseUrl,
       method: "POST",
       body: {
         refresh_token: refreshToken,

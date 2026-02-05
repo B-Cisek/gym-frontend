@@ -1,9 +1,8 @@
-export default defineNuxtPlugin(async () => {
-  const { user, fetchUser } = useAuth();
+export default defineNuxtPlugin(() => {
+  const event = useRequestEvent();
+  const { user } = useAuth();
 
-  if (user.value) {
-    return;
+  if (event?.context?.user) {
+    user.value = event.context.user;
   }
-
-  await fetchUser();
 });

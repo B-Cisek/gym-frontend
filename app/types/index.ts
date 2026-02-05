@@ -1,14 +1,3 @@
-export enum UserRole {
-  USER = "ROLE_USER",
-  OWNER = "ROLE_OWNER",
-}
-
-export interface User {
-  id: string;
-  email: string;
-  roles: UserRole[];
-}
-
 export enum AuthErrorCode {
   EMAIL_ALREADY_TAKEN = "EMAIL_ALREADY_TAKEN",
   VALIDATION_ERROR = "VALIDATION_ERROR",
