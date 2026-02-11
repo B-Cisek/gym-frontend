@@ -24,9 +24,7 @@ const items = [
     <UNavigationMenu :items="items" variant="link" />
 
     <template #right>
-      <ClientOnly>
-        <UColorModeButton />
-      </ClientOnly>
+      <UColorModeButton />
 
       <template v-if="isLoggedIn">
         <UButton

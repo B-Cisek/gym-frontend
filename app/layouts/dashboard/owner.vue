@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
+import GymsMenu from "~/components/GymsMenu.vue";
 
 const route = useRoute();
 const toast = useToast();
+const { fetchGyms } = useCurrentGym();
 
 const open = ref(false);
 
@@ -17,73 +19,43 @@ const links = [
       },
     },
     {
-      label: "Inbox",
-      icon: "i-lucide-inbox",
-      to: "/inbox",
-      badge: "4",
-      onSelect: () => {
-        open.value = false;
-      },
-    },
-    {
       label: "Customers",
       icon: "i-lucide-users",
-      to: "/customers",
+      to: "/owner/dashboard/customers",
       onSelect: () => {
         open.value = false;
       },
     },
     {
       label: "Settings",
-      to: "/settings",
+      to: "/owner/dashboard/settings",
       icon: "i-lucide-settings",
       defaultOpen: true,
       type: "trigger",
       children: [
         {
           label: "General",
-          to: "/settings",
+          to: "/owner/dashboard/settings",
           exact: true,
           onSelect: () => {
             open.value = false;
           },
         },
         {
-          label: "Members",
-          to: "/settings/members",
-          onSelect: () => {
-            open.value = false;
-          },
-        },
-        {
           label: "Notifications",
-          to: "/settings/notifications",
+          to: "/owner/dashboard/settings/notifications",
           onSelect: () => {
             open.value = false;
           },
         },
         {
           label: "Security",
-          to: "/settings/security",
+          to: "/owner/dashboard/settings/security",
           onSelect: () => {
             open.value = false;
           },
         },
       ],
-    },
-  ],
-  [
-    {
-      label: "Feedback",
-      icon: "i-lucide-message-circle",
-      to: "https://github.com/nuxt-ui-templates/dashboard",
-      target: "_blank",
-    },
-    {
-      label: "Help & Support",
-      icon: "i-lucide-info",
-      to: "https://github.com/nuxt-ui-templates/dashboard",
-      target: "_blank",
     },
   ],
 ] satisfies NavigationMenuItem[][];
@@ -109,7 +81,9 @@ const groups = computed(() => [
   },
 ]);
 
-onMounted(async () => {
+await callOnce(fetchGyms);
+
+onMounted(() => {
   const cookie = useCookie("cookie-consent");
   if (cookie.value === "accepted") {
     return;
@@ -149,7 +123,7 @@ onMounted(async () => {
       :ui="{ footer: 'lg:border-t lg:border-default' }"
     >
       <template #header="{ collapsed }">
-        <TeamsMenu :collapsed="collapsed" />
+        <GymsMenu :collapsed="collapsed" />
       </template>
 
       <template #default="{ collapsed }">

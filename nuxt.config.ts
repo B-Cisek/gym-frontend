@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   typescript: {
     typeCheck: false,
   },
-  modules: ["@nuxt/eslint", "@nuxt/icon", "@nuxt/ui", "@nuxt/content"],
+  modules: ["@nuxt/eslint", "@nuxt/ui", "@nuxt/content"],
   css: ["~/assets/css/main.css"],
   runtimeConfig: {
     public: {

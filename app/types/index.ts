@@ -20,3 +20,9 @@ export interface ApiError {
   status: number;
   message?: string;
 }
+
+export interface Gym {
+  id: string;
+  name: string;
+  address: string;
+}
