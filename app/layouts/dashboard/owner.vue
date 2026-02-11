@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from "@nuxt/ui";
-import GymsMenu from "~/components/GymsMenu.vue";
+import GymsSelect from "~/components/GymsSelect.vue";
 
 const route = useRoute();
 const toast = useToast();
@@ -123,7 +123,7 @@ onMounted(() => {
       :ui="{ footer: 'lg:border-t lg:border-default' }"
     >
       <template #header="{ collapsed }">
-        <GymsMenu :collapsed="collapsed" />
+        <GymsSelect :collapsed="collapsed" />
       </template>
 
       <template #default="{ collapsed }">

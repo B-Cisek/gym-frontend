@@ -1,5 +1,5 @@
 import { createSharedComposable } from "@vueuse/core";
-import type { Gym } from "~/types";
+import type { GymMenu } from "~/types";
 
 const GYM_SELECTED_COOKIE_NAME = "CURRENT_GYM_ID";
 
@@ -10,10 +10,10 @@ const _useCurrentGym = () => {
     default: () => null,
   });
 
-  const gyms = useState<Gym[]>("gyms", () => []);
+  const gyms = useState<GymMenu[]>("gyms", () => []);
   const loading = ref<boolean>(false);
 
-  const currentGym = computed<Gym | null>(
+  const currentGym = computed<GymMenu | null>(
     () =>
       gyms.value.find((g) => g.id === selectedGymId.value) ??
       gyms.value[0] ??
@@ -24,7 +24,7 @@ const _useCurrentGym = () => {
     loading.value = true;
 
     try {
-      const result = await get<{ gyms: Gym[] }>("/gyms");
+      const result = await get<{ gyms: GymMenu[] }>("/gyms");
 
       gyms.value = result.gyms;
 
@@ -36,7 +36,7 @@ const _useCurrentGym = () => {
     }
   }
 
-  function selectGym(gym: Gym) {
+  function selectGym(gym: GymMenu) {
     selectedGymId.value = gym.id;
   }
 

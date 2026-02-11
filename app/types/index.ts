@@ -24,5 +24,13 @@ export interface ApiError {
 export interface Gym {
   id: string;
   name: string;
-  address: string;
+  createdAt: string;
+  street?: string;
+  city?: string;
+  postalCode?: string;
+}
+
+export interface GymMenu {
+  id: string;
+  name: string;
 }

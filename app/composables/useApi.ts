@@ -23,7 +23,7 @@ export function useApi() {
     patch: <T>(url: string, body?: ApiBody, options?: ApiOptions) =>
       $api<T>(url, { ...options, method: "PATCH", body }),
 
-    delete: <T>(url: string, options?: ApiOptions) =>
+    del: <T>(url: string, options?: ApiOptions) =>
       $api<T>(url, { ...options, method: "DELETE" }),
   };
 }
