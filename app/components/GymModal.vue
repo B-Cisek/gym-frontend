@@ -5,11 +5,12 @@ import type { Gym } from "~/types";
 
 const props = defineProps<{
   gym?: Gym;
+  forced?: boolean;
 }>();
 
 const toast = useAppToast();
 const { post, put } = useApi();
-const { fetchGyms } = useCurrentGym();
+const gymContext = useGymContext();
 
 const isOpen = defineModel<boolean>();
 
@@ -60,7 +61,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       toast.success("Siłownia została dodana.");
     }
 
-    await fetchGyms();
+    await gymContext.fetchGyms();
     resetForm();
     isOpen.value = false;
   } catch {
@@ -74,8 +75,20 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 <template>
   <UModal
     v-model:open="isOpen"
-    :title="isEditMode ? 'Edytuj siłownię' : 'Dodaj nową siłownię'"
-    description=""
+    :title="
+      forced
+        ? 'Dodaj swoją pierwszą siłownię'
+        : isEditMode
+          ? 'Edytuj siłownię'
+          : 'Tworzenie siłowni'
+    "
+    :description="
+      forced
+        ? 'Aby korzystać z panelu, musisz dodać co najmniej jedną siłownię.'
+        : 'Dodaj nową lokalicazje siłowni'
+    "
+    :close="!forced"
+    :dismissible="!forced"
   >
     <template #body>
       <UForm

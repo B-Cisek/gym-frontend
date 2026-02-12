@@ -4,7 +4,8 @@ import GymsSelect from "~/components/GymsSelect.vue";
 
 const route = useRoute();
 const toast = useToast();
-const { fetchGyms } = useCurrentGym();
+
+const gymContext = useGymContext();
 
 const open = ref(false);
 
@@ -81,7 +82,19 @@ const groups = computed(() => [
   },
 ]);
 
-await callOnce(fetchGyms);
+await callOnce(gymContext.fetchGyms);
+
+const forceGymModalOpen = ref(false);
+
+watch(
+  () => gymContext.gyms.length,
+  (len) => {
+    if (len === 0 && !gymContext.loading) {
+      forceGymModalOpen.value = true;
+    }
+  },
+  { immediate: true },
+);
 
 onMounted(() => {
   const cookie = useCookie("cookie-consent");
@@ -159,5 +172,7 @@ onMounted(() => {
     <slot />
 
     <NotificationsSlideover />
+
+    <GymModal v-model="forceGymModalOpen" forced />
   </UDashboardGroup>
 </template>

@@ -16,3 +16,11 @@
   --color-green-900: #0a5331;
   --color-green-950: #052e16;
 }
+
+@layer base {
+  button,
+  [role="button"] {
+    @apply cursor-pointer;
+    @apply disabled:cursor-not-allowed;
+  }
+}

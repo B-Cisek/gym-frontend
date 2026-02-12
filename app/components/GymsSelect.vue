@@ -1,18 +1,19 @@
 <script setup lang="ts">
 import type { DropdownMenuItem } from "@nuxt/ui";
+import type { GymMenu } from "~/types";
 
 defineProps<{ collapsed?: boolean }>();
 
-const { gyms, currentGym, selectGym } = useCurrentGym();
+const gymContext = useGymContext();
 
 const isAddGymOpen = ref(false);
 const isManageGymsOpen = ref(false);
 
 const items = computed<DropdownMenuItem[][]>(() => [
-  gyms.value.map((gym) => ({
+  gymContext.gyms.map((gym: GymMenu) => ({
     label: gym.name,
     onSelect() {
-      selectGym(gym);
+      gymContext.setGym(gym);
     },
   })),
   [
@@ -43,7 +44,11 @@ const items = computed<DropdownMenuItem[][]>(() => [
     }"
   >
     <UButton
-      :label="collapsed ? undefined : (currentGym?.name ?? 'Select gym')"
+      :label="
+        collapsed
+          ? undefined
+          : (gymContext.selectedGym?.name ?? 'Wybierz siłownię')
+      "
       :trailing-icon="collapsed ? undefined : 'i-lucide-chevrons-up-down'"
       color="neutral"
       variant="ghost"

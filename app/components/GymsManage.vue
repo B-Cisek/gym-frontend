@@ -6,6 +6,7 @@ const isManageGymsOpen = defineModel<boolean>();
 
 const { get, del } = useApi();
 const toast = useAppToast();
+const gymContext = useGymContext();
 
 // TODO: refactor to store
 const { data, pending, execute } = useAsyncData<{ gyms: Gym[] }>(
@@ -19,6 +20,11 @@ const { data, pending, execute } = useAsyncData<{ gyms: Gym[] }>(
 
 async function deleteGym(gym: Gym) {
   const confirm = useConfirmModal();
+
+  if (gymContext.selectedGym?.id === gym.id) {
+    toast.error("Nie można usunąć siłownia, która jest aktualnie wybrana");
+    return;
+  }
 
   const confirmed = await confirm({
     title: "Usuń siłownię",
