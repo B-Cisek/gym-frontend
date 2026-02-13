@@ -6,23 +6,34 @@ definePageMeta({
   layout: "dashboard-owner",
 });
 
+const ownerSettings = useOwnerSettings();
+await callOnce(ownerSettings.fetchSettings);
+
 const links = [
   [
     {
-      label: "General",
+      label: "Profil",
       icon: "i-lucide-user",
       to: "/owner/dashboard/settings",
       exact: true,
     },
     {
-      label: "Notifications",
-      icon: "i-lucide-bell",
-      to: "/owner/dashboard/settings/notifications",
+      label: "Firma",
+      icon: "i-lucide-building-2",
+      to: "/owner/dashboard/settings/company",
+      exact: true,
     },
     {
-      label: "Security",
+      label: "Powiadomienia",
+      icon: "i-lucide-bell",
+      to: "/owner/dashboard/settings/notifications",
+      exact: true,
+    },
+    {
+      label: "Bezpieczeństwo",
       icon: "i-lucide-shield",
       to: "/owner/dashboard/settings/security",
+      exact: true,
     },
   ],
 ] satisfies NavigationMenuItem[][];

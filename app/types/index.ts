@@ -34,3 +34,15 @@ export interface GymMenu {
   id: string;
   name: string;
 }
+
+export interface OwnerSettings {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  companyName?: string;
+  taxId?: string;
+  street?: string;
+  city?: string;
+  postalCode?: string;
+}

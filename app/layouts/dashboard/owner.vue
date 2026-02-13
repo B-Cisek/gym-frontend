@@ -28,14 +28,14 @@ const links = [
       },
     },
     {
-      label: "Settings",
+      label: "Ustawienia",
       to: "/owner/dashboard/settings",
       icon: "i-lucide-settings",
       defaultOpen: true,
       type: "trigger",
       children: [
         {
-          label: "General",
+          label: "Profil",
           to: "/owner/dashboard/settings",
           exact: true,
           onSelect: () => {
@@ -43,14 +43,22 @@ const links = [
           },
         },
         {
-          label: "Notifications",
+          label: "Firma",
+          to: "/owner/dashboard/settings/company",
+          exact: true,
+          onSelect: () => {
+            open.value = false;
+          },
+        },
+        {
+          label: "Powiadomienia",
           to: "/owner/dashboard/settings/notifications",
           onSelect: () => {
             open.value = false;
           },
         },
         {
-          label: "Security",
+          label: "Bezpieczeństwo",
           to: "/owner/dashboard/settings/security",
           onSelect: () => {
             open.value = false;

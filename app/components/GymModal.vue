@@ -110,7 +110,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </UFormField>
 
         <UFormField label="Kod pocztowy" name="postalCode" class="w-full">
-          <UInput v-model="state.postalCode" type="text" class="w-full" />
+          <PostalCodeInput v-model="state.postalCode" class="w-full" />
         </UFormField>
 
         <UButton type="submit" class="w-full justify-center" :loading="loading">
