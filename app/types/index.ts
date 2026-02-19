@@ -35,6 +35,12 @@ export interface GymMenu {
   name: string;
 }
 
+export interface Subscription {
+  status: "active" | "expired" | "none";
+  planName?: string;
+  currentPeriodEnd?: string;
+}
+
 export interface OwnerSettings {
   firstName?: string;
   lastName?: string;

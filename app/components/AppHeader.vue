@@ -76,27 +76,29 @@ const items = [
 
       <USeparator class="my-6" />
 
-      <template v-if="isLoggedIn">
-        <UButton
-          label="Dashboard"
-          color="neutral"
-          trailing-icon="i-lucide-arrow-right"
-          to="/owner/dashboard"
-          block
-        />
-      </template>
+      <ClientOnly>
+        <template v-if="isLoggedIn">
+          <UButton
+            label="Dashboard"
+            color="neutral"
+            trailing-icon="i-lucide-arrow-right"
+            to="/owner/dashboard"
+            block
+          />
+        </template>
 
-      <template v-else>
-        <UButton
-          label="Sign in"
-          color="neutral"
-          variant="subtle"
-          to="/login"
-          block
-          class="mb-3"
-        />
-        <UButton label="Sign up" color="neutral" to="/signup" block />
-      </template>
+        <template v-else>
+          <UButton
+            label="Sign in"
+            color="neutral"
+            variant="subtle"
+            to="/login"
+            block
+            class="mb-3"
+          />
+          <UButton label="Sign up" color="neutral" to="/signup" block />
+        </template>
+      </ClientOnly>
     </template>
   </UHeader>
 </template>

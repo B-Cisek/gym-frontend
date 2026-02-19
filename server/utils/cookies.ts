@@ -36,7 +36,18 @@ export function setRefreshTokenCookie(event: H3Event, refreshToken: string) {
   );
 }
 
+export function setSessionCookie(event: H3Event) {
+  setAuthCookie(
+    event,
+    HAS_SESSION_COOKIE,
+    "1",
+    REFRESH_TOKEN_MAX_AGE,
+    false,
+  );
+}
+
 export function clearAuthCookies(event: H3Event) {
   deleteCookie(event, TOKEN_COOKIE);
   deleteCookie(event, REFRESH_TOKEN_COOKIE);
+  deleteCookie(event, HAS_SESSION_COOKIE);
 }

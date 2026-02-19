@@ -35,6 +35,12 @@ const links = [
       to: "/owner/dashboard/settings/security",
       exact: true,
     },
+    {
+      label: "Subskrypcja",
+      icon: "i-lucide-credit-card",
+      to: "/owner/dashboard/settings/subscription",
+      exact: true,
+    },
   ],
 ] satisfies NavigationMenuItem[][];
 </script>

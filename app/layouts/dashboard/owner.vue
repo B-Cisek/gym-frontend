@@ -64,6 +64,14 @@ const links = [
             open.value = false;
           },
         },
+        {
+          label: "Subskrypcja",
+          to: "/owner/dashboard/settings/subscription",
+          exact: true,
+          onSelect: () => {
+            open.value = false;
+          },
+        },
       ],
     },
   ],

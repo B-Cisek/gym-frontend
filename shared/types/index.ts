@@ -45,4 +45,5 @@ export interface AuthResponse {
 
 export const TOKEN_COOKIE = "TOKEN";
 export const REFRESH_TOKEN_COOKIE = "REFRESH_TOKEN";
+export const HAS_SESSION_COOKIE = "HAS_SESSION";
 export type CookieName = typeof TOKEN_COOKIE | typeof REFRESH_TOKEN_COOKIE;

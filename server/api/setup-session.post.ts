@@ -3,6 +3,7 @@ export default defineEventHandler(async (event) => {
 
   setTokenCookie(event, data.token);
   setRefreshTokenCookie(event, data.refresh_token);
+  setSessionCookie(event);
 
   return {
     success: true,
