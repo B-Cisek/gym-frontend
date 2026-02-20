@@ -1,53 +1,55 @@
 <script setup lang="ts">
 const columns = [
   {
-    label: "Resources",
+    label: "Zasoby",
     children: [
       {
-        label: "Help center",
+        label: "Centrum pomocy",
       },
       {
-        label: "Docs",
+        label: "Dokumentacja",
       },
       {
-        label: "Roadmap",
+        label: "Plan rozwoju",
       },
       {
-        label: "Changelog",
+        label: "Aktualności",
+        to: "/changelog",
       },
     ],
   },
   {
-    label: "Features",
+    label: "Funkcje",
     children: [
       {
-        label: "Affiliates",
+        label: "Zarządzanie klientami",
       },
       {
-        label: "Portal",
+        label: "Grafik zajęć",
       },
       {
-        label: "Jobs",
+        label: "Płatności online",
       },
       {
-        label: "Sponsors",
+        label: "Raporty",
       },
     ],
   },
   {
-    label: "Company",
+    label: "Firma",
     children: [
       {
-        label: "About",
+        label: "O nas",
       },
       {
-        label: "Pricing",
+        label: "Cennik",
+        to: "/pricing",
       },
       {
-        label: "Careers",
+        label: "Kariera",
       },
       {
-        label: "Blog",
+        label: "Kontakt",
       },
     ],
   },
@@ -62,14 +64,14 @@ function onSubmit() {
   loading.value = true;
 
   toast.add({
-    title: "Subscribed!",
-    description: "You've been subscribed to our newsletter.",
+    title: "Zapisano!",
+    description: "Zostałeś zapisany do naszego newslettera.",
   });
 }
 </script>
 
 <template>
-  <USeparator icon="i-simple-icons-nuxtdotjs" class="h-px" />
+  <USeparator icon="i-lucide-dumbbell" class="h-px" />
 
   <UFooter :ui="{ top: 'border-b border-default' }">
     <template #top>
@@ -79,21 +81,21 @@ function onSubmit() {
             <form @submit.prevent="onSubmit">
               <UFormField
                 name="email"
-                label="Subscribe to our newsletter"
+                label="Zapisz się do newslettera"
                 size="lg"
               >
                 <UInput
                   v-model="email"
                   type="email"
                   class="w-full"
-                  placeholder="Enter your email"
+                  placeholder="Twój adres email"
                 >
                   <template #trailing>
                     <UButton
                       type="submit"
                       size="xs"
                       color="neutral"
-                      label="Subscribe"
+                      label="Zapisz się"
                     />
                   </template>
                 </UInput>
@@ -106,32 +108,26 @@ function onSubmit() {
 
     <template #left>
       <p class="text-muted text-sm">
-        Built with Nuxt UI • © {{ new Date().getFullYear() }}
+        GymFlow © {{ new Date().getFullYear() }} – Wszelkie prawa zastrzeżone
       </p>
     </template>
 
     <template #right>
       <UButton
-        to="https://go.nuxt.com/discord"
-        target="_blank"
-        icon="i-simple-icons-discord"
-        aria-label="Nuxt on Discord"
+        icon="i-simple-icons-facebook"
+        aria-label="GymFlow na Facebooku"
         color="neutral"
         variant="ghost"
       />
       <UButton
-        to="https://go.nuxt.com/x"
-        target="_blank"
+        icon="i-simple-icons-instagram"
+        aria-label="GymFlow na Instagramie"
+        color="neutral"
+        variant="ghost"
+      />
+      <UButton
         icon="i-simple-icons-x"
-        aria-label="Nuxt on X"
-        color="neutral"
-        variant="ghost"
-      />
-      <UButton
-        to="https://github.com/nuxt-ui-templates/saas"
-        target="_blank"
-        icon="i-simple-icons-github"
-        aria-label="Nuxt UI on GitHub"
+        aria-label="GymFlow na X"
         color="neutral"
         variant="ghost"
       />

@@ -93,7 +93,7 @@ async function onSubmit(payload: FormSubmitEvent<Schema>) {
     <template #footer>
       Rejestrując się, akceptujesz nasze warunki korzystania z serwisu
       <br />
-      <ULink to="/" class="text-primary font-medium">Terms of Service</ULink>.
+      <ULink to="/" class="text-primary font-medium">Regulamin</ULink>.
     </template>
   </UAuthForm>
 </template>

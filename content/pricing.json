@@ -1,116 +1,56 @@
 {
-  "title": "A plan for every need",
-  "description": "Our plans are designed to meet the requirements of both beginners and players. Get the right plan that suits you.",
+  "title": "Plan dopasowany do Twojej siłowni",
+  "description": "Przejrzyste ceny bez ukrytych kosztów. Wybierz plan odpowiedni dla wielkości Twojego obiektu i zacznij już dziś.",
   "seo": {
-    "title": "Pricing",
-    "description": "Choose the plan that's right for you."
+    "title": "Cennik – GymFlow",
+    "description": "Sprawdź plany cenowe GymFlow. Bezpłatny okres próbny, brak ukrytych opłat. Zarządzaj siłownią profesjonalnie w przystępnej cenie."
   },
   "navigation.icon": "i-lucide-credit-card",
-  "plans": [
-    {
-      "title": "Basic",
-      "description": "A basic plan for individuals.",
-      "price": {
-        "month": "$9.9",
-        "year": "$99.9"
-      },
-      "button": {
-        "label": "Get Started",
-        "color": "neutral",
-        "variant": "subtle"
-      },
-      "features": [
-        "1 GB Storage",
-        "1 Email Account",
-        "1 Domain",
-        "1 Website",
-        "1 Database",
-        "1 SSL Certificate",
-        "1 Support Ticket"
-      ]
-    },
-    {
-      "title": "Standard",
-      "description": "A standard plan for small teams.",
-      "price": {
-        "month": "$19.9",
-        "year": "$199.9"
-      },
-      "highlight": true,
-      "scale": true,
-      "button": {
-        "label": "Get Started"
-      },
-      "features": [
-        "10 GB Storage",
-        "10 Email Accounts",
-        "10 Domains",
-        "10 Websites",
-        "10 Databases",
-        "10 SSL Certificates",
-        "10 Support Tickets"
-      ]
-    },
-    {
-      "title": "Premium",
-      "description": "A premium plan for large teams.",
-      "price": {
-        "month": "$29.9",
-        "year": "$299.9"
-      },
-      "button": {
-        "label": "Get Started",
-        "color": "neutral",
-        "variant": "subtle"
-      },
-      "features": [
-        "100 GB Storage",
-        "100 Email Accounts",
-        "100 Domains",
-        "100 Websites",
-        "100 Databases",
-        "100 SSL Certificates",
-        "100 Support Tickets"
-      ]
-    }
-  ],
   "logos": {
-    "title": "Trusted by the world's best",
+    "title": "Integrujemy się z popularnymi systemami płatności",
     "icons": [
-      "i-simple-icons-amazonaws",
-      "i-simple-icons-heroku",
-      "i-simple-icons-netlify",
-      "i-simple-icons-vercel",
-      "i-simple-icons-cloudflare"
+      "i-simple-icons-stripe",
+      "i-simple-icons-paypal",
+      "i-simple-icons-googlepay",
+      "i-simple-icons-applepay",
+      "i-simple-icons-visa"
     ]
   },
   "faq": {
-    "title": "Frequently asked questions",
-    "description": "Culpa consectetur dolor pariatur commodo aliqua amet tempor nisi enim deserunt elit cillum.",
+    "title": "Najczęściej zadawane pytania",
+    "description": "Masz pytania dotyczące planów lub funkcji? Znajdź odpowiedzi poniżej lub skontaktuj się z naszym zespołem wsparcia.",
     "items": [
       {
-        "label": "Is this a secure service?",
-        "content": "Qui sunt nostrud aliquip reprehenderit enim proident veniam magna aliquip velit occaecat eiusmod nisi deserunt sunt."
+        "label": "Czy mogę zacząć bezpłatnie?",
+        "content": "Tak, każdy plan zawiera 14-dniowy bezpłatny okres próbny bez konieczności podawania danych karty płatniczej. Po zakończeniu próby możesz wybrać odpowiedni plan lub zrezygnować bez żadnych zobowiązań."
       },
       {
-        "label": "How can I cancel my subscription?",
-        "content": "Consectetur irure Lorem nostrud adipisicing aliqua mollit Lorem sit officia magna eiusmod cupidatat."
+        "label": "Jak mogę anulować subskrypcję?",
+        "content": "Subskrypcję możesz anulować w dowolnym momencie z poziomu panelu ustawień. Po anulowaniu zachowujesz dostęp do końca opłaconego okresu rozliczeniowego. Nie ma żadnych ukrytych opłat za rezygnację."
       },
       {
-        "label": "How does the free trial work?",
-        "content": "Quis officia commodo magna eu qui aliquip duis."
+        "label": "Czy mogę zmienić plan w trakcie subskrypcji?",
+        "content": "Oczywiście. Plan możesz zmienić w dowolnym momencie – zarówno na wyższy, jak i niższy. Przy zmianie na wyższy plan różnica jest naliczana proporcjonalnie do końca bieżącego okresu. Przy zmianie na niższy plan zmiana następuje od kolejnego okresu rozliczeniowego."
       },
       {
-        "label": "Can I switch plans later?",
-        "content": "Dolore irure ullamco dolore eu occaecat magna eiusmod dolor aliqua culpa labore."
+        "label": "Czy oferujecie rabaty przy rozliczeniu rocznym?",
+        "content": "Tak, wybierając plan roczny oszczędzasz 2 miesiące w porównaniu do płatności miesięcznych – czyli efektywnie płacisz za 10 miesięcy, a korzystasz przez 12. Rabat jest naliczany automatycznie."
       },
       {
-        "label": "Do you offer refunds?",
-        "content": "Duis mollit nostrud voluptate mollit Lorem dolore commodo veniam incididunt eiusmod."
+        "label": "Co się dzieje z moimi danymi po anulowaniu?",
+        "content": "Twoje dane są bezpieczne przez 30 dni po zakończeniu subskrypcji – możesz w tym czasie wyeksportować wszystkie informacje o klientach, karnetach i transakcjach. Po tym czasie dane są trwale usuwane zgodnie z RODO."
       },
       {
-        "label": "Do you offer support?",
-        "content": "Aliqua sit nisi consequat pariatur Lorem minim irure qui."
+        "label": "Czy GymFlow działa na wielu lokalizacjach?",
+        "content": "Plan Pro umożliwia zarządzanie do 5 siłowniami, a plan Unlimited daje nieograniczoną liczbę lokalizacji. Każda siłownia ma własny grafik, pracowników i raporty finansowe, a Ty masz podgląd całości z jednego panelu."
+      },
+      {
+        "label": "Czy jest dostępne wsparcie techniczne?",
+        "content": "Wszystkie plany obejmują dostęp do centrum pomocy i dokumentacji. Plan Pro i Unlimited zapewniają wsparcie przez czat na żywo w godzinach roboczych, a plan Unlimited dodatkowo priorytetową obsługę przez email i telefon."
+      },
+      {
+        "label": "Czy oferujecie faktury VAT?",
+        "content": "Tak, faktury VAT są wystawiane automatycznie po każdej płatności i dostępne do pobrania z poziomu panelu. Możesz podać dane firmy do faktury w ustawieniach konta."
       }
     ]
   }

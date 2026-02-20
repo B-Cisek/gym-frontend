@@ -41,6 +41,21 @@ export interface Subscription {
   currentPeriodEnd?: string;
 }
 
+export interface PlanPrice {
+  id: string;
+  amount: number;
+  currency: string;
+  interval: "month" | "year";
+}
+
+export interface Plan {
+  id: string;
+  tier: string;
+  gymsLimit: number;
+  staffLimit: number;
+  prices: PlanPrice[];
+}
+
 export interface OwnerSettings {
   firstName?: string;
   lastName?: string;

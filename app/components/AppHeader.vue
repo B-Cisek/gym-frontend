@@ -3,11 +3,11 @@ const { isLoggedIn } = useAuth();
 
 const items = [
   {
-    label: "Pricing",
+    label: "Cennik",
     to: "/pricing",
   },
   {
-    label: "Changelog",
+    label: "Aktualności",
     to: "/changelog",
   },
 ];
@@ -17,7 +17,7 @@ const items = [
   <UHeader>
     <template #left>
       <NuxtLink to="/">
-        <AppLogo class="w-auto h-6 shrink-0" />
+        <AppLogo class="w-auto h-8 shrink-0" />
       </NuxtLink>
     </template>
 
@@ -36,7 +36,7 @@ const items = [
         />
 
         <UButton
-          label="Dashboard"
+          label="Panel"
           color="neutral"
           trailing-icon="i-lucide-arrow-right"
           class="hidden lg:inline-flex"
@@ -54,7 +54,7 @@ const items = [
         />
 
         <UButton
-          label="Sign in"
+          label="Zaloguj się"
           color="neutral"
           variant="outline"
           to="/login"
@@ -62,7 +62,7 @@ const items = [
         />
 
         <UButton
-          label="Sign up"
+          label="Zarejestruj się"
           color="neutral"
           trailing-icon="i-lucide-arrow-right"
           class="hidden lg:inline-flex"
@@ -79,7 +79,7 @@ const items = [
       <ClientOnly>
         <template v-if="isLoggedIn">
           <UButton
-            label="Dashboard"
+            label="Panel"
             color="neutral"
             trailing-icon="i-lucide-arrow-right"
             to="/owner/dashboard"
@@ -89,14 +89,14 @@ const items = [
 
         <template v-else>
           <UButton
-            label="Sign in"
+            label="Zaloguj się"
             color="neutral"
             variant="subtle"
             to="/login"
             block
             class="mb-3"
           />
-          <UButton label="Sign up" color="neutral" to="/signup" block />
+          <UButton label="Zarejestruj się" color="neutral" to="/signup" block />
         </template>
       </ClientOnly>
     </template>

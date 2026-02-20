@@ -19,14 +19,31 @@ useSeoMeta({
   <div v-if="page">
     <UPageHero :title="page.title" :description="page.description">
       <template #top>
+        <div class="absolute inset-0 -z-10">
+          <img
+            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1600&q=80"
+            alt="Siłownia"
+            class="w-full h-full object-cover"
+          />
+          <div class="absolute inset-0 bg-black/55" />
+        </div>
         <HeroBackground />
       </template>
 
       <template #title>
-        <MDC :value="page.title" unwrap="p" />
+        <span
+          class="text-white [text-shadow:0_2px_20px_rgba(0,0,0,1),0_0_40px_rgba(0,0,0,0.8)]"
+        >
+          <MDC :value="page.title" unwrap="p" />
+        </span>
       </template>
 
-      <PromotionalVideo />
+      <template #description>
+        <span
+          class="text-white/90 [text-shadow:0_1px_10px_rgba(0,0,0,1),0_0_20px_rgba(0,0,0,0.8)]"
+          >{{ page.description }}</span
+        >
+      </template>
     </UPageHero>
 
     <UPageSection
@@ -53,30 +70,6 @@ useSeoMeta({
           spotlight
         />
       </UPageGrid>
-    </UPageSection>
-
-    <UPageSection
-      id="testimonials"
-      :headline="page.testimonials.headline"
-      :title="page.testimonials.title"
-      :description="page.testimonials.description"
-    >
-      <UPageColumns class="xl:columns-4">
-        <UPageCard
-          v-for="(testimonial, index) in page.testimonials.items"
-          :key="index"
-          variant="subtle"
-          :description="testimonial.quote"
-          :ui="{
-            description:
-              'before:content-[open-quote] after:content-[close-quote]',
-          }"
-        >
-          <template #footer>
-            <UUser v-bind="testimonial.user" size="lg" />
-          </template>
-        </UPageCard>
-      </UPageColumns>
     </UPageSection>
 
     <USeparator />

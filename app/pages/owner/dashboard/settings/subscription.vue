@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Subscription } from "~/types";
 
+const subscriptionStore = useSubscription();
+
 const subscription = ref<Subscription>({
   status: "active",
   planName: "Pro",
@@ -18,6 +20,11 @@ const formattedDate = computed(() => {
     },
   );
 });
+
+const manageSubscription = async () => {
+  const url = await subscriptionStore.openPortal();
+  await navigateTo(url, { external: true });
+};
 </script>
 
 <template>
@@ -52,6 +59,7 @@ const formattedDate = computed(() => {
 
     <template #footer>
       <UButton
+        @click="manageSubscription"
         label="Zarządzaj subskrypcją"
         icon="i-lucide-external-link"
         trailing
