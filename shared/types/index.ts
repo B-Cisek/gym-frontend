@@ -26,6 +26,7 @@ export interface User {
   id: string;
   email: string;
   roles: UserRole[];
+  isProfileComplete: boolean;
 }
 
 export interface LoginCredentials {

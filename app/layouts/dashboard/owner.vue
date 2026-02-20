@@ -100,18 +100,6 @@ const groups = computed(() => [
 
 await callOnce(gymContext.fetchGyms);
 
-const forceGymModalOpen = ref(false);
-
-watch(
-  () => gymContext.gyms.length,
-  (len) => {
-    if (len === 0 && !gymContext.loading) {
-      forceGymModalOpen.value = true;
-    }
-  },
-  { immediate: true },
-);
-
 onMounted(() => {
   const cookie = useCookie("cookie-consent");
   if (cookie.value === "accepted") {
@@ -188,7 +176,5 @@ onMounted(() => {
     <slot />
 
     <NotificationsSlideover />
-
-    <GymModal v-model="forceGymModalOpen" forced />
   </UDashboardGroup>
 </template>
