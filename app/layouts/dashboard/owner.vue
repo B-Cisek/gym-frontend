@@ -6,6 +6,7 @@ const route = useRoute();
 const toast = useToast();
 
 const gymContext = useGymContext();
+const subscription = useSubscription();
 
 const open = ref(false);
 
@@ -99,6 +100,7 @@ const groups = computed(() => [
 ]);
 
 await callOnce(gymContext.fetchGyms);
+await callOnce(subscription.fetchSubscription);
 
 onMounted(() => {
   const cookie = useCookie("cookie-consent");

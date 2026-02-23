@@ -35,10 +35,24 @@ export interface GymMenu {
   name: string;
 }
 
+export enum SubscriptionStatus {
+  TRIALING = "trialing",
+  ACTIVE = "active",
+  INCOMPLETE = "incomplete",
+  INCOMPLETE_EXPIRED = "incomplete_expired",
+  PAST_DUE = "past_due",
+  CANCELED = "canceled",
+  UNPAID = "unpaid",
+  PAUSED = "paused",
+}
+
 export interface Subscription {
-  status: "active" | "expired" | "none";
-  planName?: string;
-  currentPeriodEnd?: string;
+  id: string;
+  status: SubscriptionStatus;
+  startTime: string;
+  endTime: string;
+  canceledAt: string | null;
+  tier: string;
 }
 
 export interface PlanPrice {
@@ -48,9 +62,15 @@ export interface PlanPrice {
   interval: "month" | "year";
 }
 
+export enum PlanTier {
+  BASIC = "basic",
+  PRO = "pro",
+  UNLIMITED = "unlimited",
+}
+
 export interface Plan {
   id: string;
-  tier: string;
+  tier: PlanTier;
   gymsLimit: number;
   staffLimit: number;
   prices: PlanPrice[];

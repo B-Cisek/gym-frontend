@@ -1,5 +1,17 @@
+import type { Subscription } from "~/types";
+
 export const useSubscription = defineStore("subscription", () => {
-  const { post } = useApi();
+  const { post, get } = useApi();
+
+  const subscription = ref<Subscription | null>(null);
+
+  async function fetchSubscription() {
+    const data = await get<Subscription>("/subscription");
+
+    if (data.id) {
+      subscription.value = data;
+    }
+  }
 
   async function createCheckoutSession(planPriceId: string): Promise<string> {
     const { url } = await post<{ url: string }>("/subscriptions/checkout", {
@@ -15,5 +27,5 @@ export const useSubscription = defineStore("subscription", () => {
     return url;
   }
 
-  return { createCheckoutSession, openPortal };
+  return { createCheckoutSession, openPortal, fetchSubscription, subscription };
 });
