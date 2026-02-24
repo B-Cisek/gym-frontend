@@ -6,8 +6,7 @@ definePageMeta({
   layout: "dashboard-owner",
 });
 
-const ownerSettings = useOwnerSettings();
-await callOnce(ownerSettings.fetchSettings);
+await useAsyncData(() => useOwnerSettings().fetchSettings());
 
 const links = [
   [

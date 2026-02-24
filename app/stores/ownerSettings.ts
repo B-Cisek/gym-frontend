@@ -1,6 +1,8 @@
 import type { OwnerSettings } from "~/types";
 
 export const useOwnerSettings = defineStore("ownerSettings", () => {
+  useNuxtApp().hook("user:logout", () => clear());
+
   const { get, patch } = useApi();
 
   const settings = ref<OwnerSettings>({});
@@ -39,6 +41,10 @@ export const useOwnerSettings = defineStore("ownerSettings", () => {
   }): Promise<void> {
     await patch("/owner/settings", data);
     Object.assign(settings.value, data);
+  }
+
+  function clear() {
+    settings.value = {};
   }
 
   return {

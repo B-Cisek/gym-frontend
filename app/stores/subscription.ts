@@ -1,6 +1,8 @@
 import type { Subscription } from "~/types";
 
 export const useSubscription = defineStore("subscription", () => {
+  useNuxtApp().hook("user:logout", () => clear());
+
   const { post, get } = useApi();
 
   const subscription = ref<Subscription | null>(null);
@@ -27,5 +29,15 @@ export const useSubscription = defineStore("subscription", () => {
     return url;
   }
 
-  return { createCheckoutSession, openPortal, fetchSubscription, subscription };
+  function clear(): void {
+    subscription.value = null;
+  }
+
+  return {
+    createCheckoutSession,
+    openPortal,
+    fetchSubscription,
+    subscription,
+    clear,
+  };
 });

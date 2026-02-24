@@ -3,6 +3,10 @@ import type { GymMenu } from "~/types";
 const GYM_SELECTED_COOKIE_NAME = "CURRENT_GYM_ID";
 
 export const useGymContext = defineStore("gymContext", () => {
+  const nuxtApp = useNuxtApp();
+  nuxtApp.hook("user:logout", () => clear());
+  nuxtApp.hook("user:login", () => fetchGyms());
+
   const { get } = useApi();
 
   const selectedGymId = useCookie<string | null>(GYM_SELECTED_COOKIE_NAME, {
@@ -42,5 +46,10 @@ export const useGymContext = defineStore("gymContext", () => {
     selectedGymId.value = gym.id;
   }
 
-  return { fetchGyms, setGym, loading, gyms, selectedGym };
+  function clear(): void {
+    gyms.value = [];
+    selectedGymId.value = null;
+  }
+
+  return { fetchGyms, setGym, loading, gyms, selectedGym, clear };
 });

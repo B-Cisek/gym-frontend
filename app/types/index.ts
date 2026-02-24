@@ -51,7 +51,7 @@ export interface Subscription {
   status: SubscriptionStatus;
   startTime: string;
   endTime: string;
-  canceledAt: string | null;
+  cancelTime: string | null;
   tier: string;
 }
 

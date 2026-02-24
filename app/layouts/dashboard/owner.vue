@@ -99,8 +99,8 @@ const groups = computed(() => [
   },
 ]);
 
-await callOnce(gymContext.fetchGyms);
-await callOnce(subscription.fetchSubscription);
+await gymContext.fetchGyms();
+await subscription.fetchSubscription();
 
 onMounted(() => {
   const cookie = useCookie("cookie-consent");

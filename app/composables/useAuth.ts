@@ -2,6 +2,8 @@ import type { ApiError } from "~/types";
 import { AuthError, AuthErrorCode } from "~/types";
 
 export const useAuth = () => {
+  const nuxtApp = useNuxtApp();
+
   const user = useState<User | null>("user", () => null);
   const isLoggedIn = computed(() => !!user.value);
   const loading = useState<boolean>("loading", () => false);
@@ -24,6 +26,7 @@ export const useAuth = () => {
       });
 
       await fetchUser();
+      await nuxtApp.callHook("user:login");
     } catch (error) {
       const apiError = error as ApiError;
 
@@ -63,6 +66,7 @@ export const useAuth = () => {
       });
 
       await fetchUser();
+      await nuxtApp.callHook("user:login");
     } catch (error) {
       const apiError = error as ApiError;
 
@@ -92,8 +96,9 @@ export const useAuth = () => {
     }
   }
 
-  function logout(): void {
+  async function logout(): Promise<void> {
     clearAuthState();
+    await nuxtApp.callHook("user:logout");
   }
 
   function clearAuthState(): void {

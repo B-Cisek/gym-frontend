@@ -8,15 +8,15 @@ callOnce(async () => subscriptionStore.fetchSubscription, {
   mode: "navigation",
 });
 
-const formattedDate = computed(() => {
-  if (!subscription.value?.endTime) return "";
+const dateFormater = (date: string) => {
+  if (!date) return "";
 
-  return new Date(subscription.value.endTime).toLocaleDateString("pl-PL", {
+  return new Date(date).toLocaleDateString("pl-PL", {
     year: "numeric",
     month: "long",
     day: "numeric",
   });
-});
+};
 
 const isPlansModalOpen = ref<boolean>(false);
 
@@ -64,10 +64,27 @@ const formatTier = (tier: string) => {
         <span class="text-sm">{{ formatTier(subscription.tier) }}</span>
       </div>
       <USeparator />
-      <div class="flex max-sm:flex-col justify-between items-start gap-4">
-        <span class="text-sm font-medium text-highlighted">Odnowienie</span>
-        <span class="text-sm">{{ formattedDate }}</span>
-      </div>
+      <template v-if="subscription?.cancelTime">
+        <div class="flex max-sm:flex-col justify-between items-start gap-4">
+          <span class="text-sm font-medium text-highlighted">Anulowana</span>
+          <span class="text-sm">{{
+            dateFormater(subscription.cancelTime)
+          }}</span>
+        </div>
+        <USeparator />
+        <div class="flex max-sm:flex-col justify-between items-start gap-4">
+          <span class="text-sm font-medium text-highlighted"
+            >Koniec dostępu</span
+          >
+          <span class="text-sm">{{ dateFormater(subscription.endTime) }}</span>
+        </div>
+      </template>
+      <template v-else>
+        <div class="flex max-sm:flex-col justify-between items-start gap-4">
+          <span class="text-sm font-medium text-highlighted">Odnowienie</span>
+          <span class="text-sm">{{ dateFormater(subscription.endTime) }}</span>
+        </div>
+      </template>
     </UPageCard>
 
     <!-- Expired -->
@@ -87,7 +104,7 @@ const formatTier = (tier: string) => {
       <USeparator />
       <div class="flex max-sm:flex-col justify-between items-start gap-4">
         <span class="text-sm font-medium text-highlighted">Wygasła</span>
-        <span class="text-sm">{{ formattedDate }}</span>
+        <span class="text-sm">{{ dateFormater(subscription.endTime) }}</span>
       </div>
 
       <template #footer>
